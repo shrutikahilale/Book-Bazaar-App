@@ -31,20 +31,27 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          backgroundColor: Colors.lightGreen,
+          backgroundColor: Colors.deepPurple,
         ),
         body: Container(
-          margin: const EdgeInsets.fromLTRB(16.0, 20.0, 20.0, 0.0),
+          margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
           padding: const EdgeInsets.fromLTRB(0, 10.0, 10.0, 10.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: Color.fromARGB(255, 211, 241, 255),
+            color: Colors.grey[200],
           ),
           child: buildBookList(),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: Icon(
+            Icons.add,
+          ),
+          backgroundColor: Colors.grey[800],
+        ),
         bottomNavigationBar: BottomNavigationBar(
           items: items,
-          selectedItemColor: Colors.lightGreen[600],
+          selectedItemColor: Colors.black,
           selectedLabelStyle: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -53,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildBookList(){
+  Widget buildBookList() {
     return BookList();
   }
 

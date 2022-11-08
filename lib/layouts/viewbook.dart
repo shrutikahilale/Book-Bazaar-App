@@ -16,12 +16,21 @@ class BookLayout extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(booktitle),
-        backgroundColor: Colors.lightGreen,
+        title: Text(booktitle, overflow: TextOverflow.ellipsis),
+        backgroundColor: Colors.deepPurple,
+        
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            vertical: 20,
+            horizontal: 24,
+          ),
+          margin: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,7 +56,7 @@ class BookLayout extends StatelessWidget {
                 ),
                 height: 150,
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
 
               Row(
                 children: [
@@ -55,14 +64,14 @@ class BookLayout extends StatelessWidget {
                     ' Rs. ',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
+                      fontSize:16 ,
                     ),
                   ),
                   // price
                   Text(
                     price,
                     style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 16.0,
                     ),
                   ),
                 ],

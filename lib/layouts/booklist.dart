@@ -44,51 +44,15 @@ class _BookListState extends State<BookList> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        // LIST OF BOOKS
-        Expanded(
-          child: ListView.builder(
-            itemCount: books.length,
-            itemBuilder: (context, index) {
-              return Book(
-                booktitle: books[index].booktitle,
-                price: books[index].price.toString(),
-                contact: books[index].contact,
-              );
-            },
-          ),
-        ),
-        // ADD BUTTON
-        Container(
-          padding: EdgeInsets.only(right: 20.0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: Colors.grey[800],
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-              ),
-              const Text(
-                'Add',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+    return ListView.builder(
+      itemCount: books.length,
+      itemBuilder: (context, index) {
+        return Book(
+          booktitle: books[index].booktitle,
+          price: books[index].price.toString(),
+          contact: books[index].contact,
+        );
+      },
     );
   }
 }
