@@ -18,7 +18,6 @@ class BookLayout extends StatelessWidget {
       appBar: AppBar(
         title: Text(booktitle, overflow: TextOverflow.ellipsis),
         backgroundColor: Colors.deepPurple,
-        
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -64,7 +63,7 @@ class BookLayout extends StatelessWidget {
                     ' Rs. ',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize:16 ,
+                      fontSize: 16,
                     ),
                   ),
                   // price
