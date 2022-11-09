@@ -31,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.deepOrange,
         ),
         body: Container(
           margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
