@@ -22,11 +22,11 @@ class BookLayout extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             vertical: 20,
             horizontal: 24,
           ),
-          margin: EdgeInsets.all(20),
+          margin: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.grey[200],
             borderRadius: BorderRadius.circular(12),
@@ -36,27 +36,27 @@ class BookLayout extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(Icons.person),
-                  SizedBox(width: 10),
+                  const Icon(Icons.person),
+                  const SizedBox(width: 10),
                   // Name of the owner
                   Text(
                     contact.sellerName,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18.0,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // book image
-              Image(
+              const Image(
                 image: AssetImage(
                   'assets/book.png',
                 ),
                 height: 150,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
               Row(
                 children: [
@@ -70,37 +70,37 @@ class BookLayout extends StatelessWidget {
                   // price
                   Text(
                     price,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16.0,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               Row(
                 children: [
-                  Icon(Icons.location_pin),
-                  SizedBox(width: 10),
+                  const Icon(Icons.location_pin),
+                  const SizedBox(width: 10),
                   // location
                   Text(
                     contact.location,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18.0,
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               Row(
                 children: [
-                  Icon(Icons.phone),
-                  SizedBox(width: 10),
+                  const Icon(Icons.phone),
+                  const SizedBox(width: 10),
                   // contact details
                   Text(
                     contact.contactNumber,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 18.0,
                     ),
                   ),

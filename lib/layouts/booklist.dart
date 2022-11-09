@@ -3,12 +3,7 @@ import 'package:bookbazaar/models/bookSellerModel.dart';
 import 'package:bookbazaar/models/personModel.dart';
 import 'booklisttile.dart';
 
-class BookList extends StatefulWidget {
-  @override
-  State<BookList> createState() => _BookListState();
-}
-
-class _BookListState extends State<BookList> {
+class BookList extends StatelessWidget {
   List<BookSeller> books = [
     BookSeller(
       'Chemistry X',
@@ -24,23 +19,15 @@ class _BookListState extends State<BookList> {
       'Nusery Rhymes',
       460.0,
       Person('UserName3', '2346565676', 'Maharashtra'),
-    ),
-    BookSeller(
-      'Story book for children',
-      900.0,
-      Person('UserName4', '9881998383', 'Asssam'),
-    ),
-    BookSeller(
-      'Story book for children',
-      900.0,
-      Person('UserName4', '9881998383', 'Asssam'),
-    ),
-    BookSeller(
-      'Story book for children',
-      900.0,
-      Person('UserName4', '9881998383', 'Asssam'),
-    ),
+    ),    
   ];
+
+  addBook(String booktitle, double price, String sellername, String location,
+      String contact) {
+        // add to database
+    books.add(
+        BookSeller(booktitle, price, Person(sellername, location, contact)));
+  }
 
   @override
   Widget build(BuildContext context) {

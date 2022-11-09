@@ -2,6 +2,7 @@ import 'package:bookbazaar/layouts/viewbook.dart';
 import 'package:flutter/material.dart';
 
 import 'home.dart';
+import 'layouts/addbook.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       home: const MyHomePage('Book Bazaar'),
       routes: {
         '/viewbook':(context) => BookLayout(),
+        '/addbook':(context)=> AddBook(),
       },
     );
   }

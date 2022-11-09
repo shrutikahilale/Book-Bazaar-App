@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "864902626732",
+    "project_id": "book-bazaar-d424a",
+    "storage_bucket": "book-bazaar-d424a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:864902626732:android:e74eb3a140bdbd55f48e09",
+        "android_client_info": {
+          "package_name": "com.example.bookbazaar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "864902626732-oif36e084a83jlu59qq43uc3fl0a3jbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd8GDQlM6d7lvNuylkvvoIz3TZmdkb1e4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "864902626732-oif36e084a83jlu59qq43uc3fl0a3jbj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,15 +11,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<BottomNavigationBarItem> items = [
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(Icons.home),
       label: 'Home',
     ),
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(Icons.favorite),
       label: 'Wishlist',
     ),
-    BottomNavigationBarItem(
+    const BottomNavigationBarItem(
       icon: Icon(Icons.person),
       label: 'Settings',
     ),
@@ -43,11 +43,13 @@ class _MyHomePageState extends State<MyHomePage> {
           child: buildBookList(),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(
-            Icons.add,
-          ),
+          onPressed: () {
+            setState(() {
+              _navigateAndDisplaySelection(context);
+            });
+          },
           backgroundColor: Colors.grey[800],
+          child: const Icon(Icons.add),
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: items,
@@ -57,6 +59,19 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _navigateAndDisplaySelection(BuildContext context) async {
+    final result = await Navigator.pushNamed(context, '/addbook') as Map;
+
+  // basically add in the database
+    await BookList().addBook(
+      result['title'],
+      double.parse(result['price']),
+      result['sellername'],
+      result['location'],
+      result['contact'],
     );
   }
 
