@@ -8,15 +8,15 @@ class Book extends StatelessWidget {
   final String price;
   final Person contact;
 
-  Book({
-    required this.booktitle,
-    required this.price,
-    required this.contact,
-  });
+  const Book(
+      {super.key,
+      required this.booktitle,
+      required this.price,
+      required this.contact});
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, '/viewbook', arguments: {
           'booktitle': booktitle,
@@ -24,73 +24,37 @@ class Book extends StatelessWidget {
           'contact': contact,
         });
       },
-      leading: Image(
-        height: 100.0,
-        image: AssetImage(
-          'assets/book.png',
-        ),
-      ),
-      title: Text(
-        booktitle,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 16.0,
-        ),
-      ),
-      subtitle: Text(
-        price,
-        style: TextStyle(
-          fontSize: 12.0,
-        ),
-      ),
-    );
-    /*
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: 10.0,
-        horizontal: 16.0,
-      ),
-      child: Row(
-        children: [
-          // Image of book
-          Image(
-            height: 80.0,
-            image: AssetImage(
-              'assets/book.png',
-            ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
           ),
-          SizedBox(
-            width: 10.0,
-          ),
-          Flexible(
+          padding: EdgeInsets.all(10.0),
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Title of book
-                Text(
-                  booktitle,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.0,
+                Image(
+                  height: 100.0,
+                  image: AssetImage(
+                    'assets/book.png',
                   ),
                 ),
-                SizedBox(
-                  height: 16.0,
-                ),
-
-                // Price of book
+                SizedBox(height: 16),
+                Text(booktitle),
+                SizedBox(height: 5),
                 Text(
-                  price,
+                  'Rs. $price',
                   style: TextStyle(
-                    fontSize: 12.0,
+                    fontSize:12,
                   ),
                 ),
               ],
             ),
-          )
-        ],
+          ),
+        ),
       ),
     );
-    */
   }
 }
