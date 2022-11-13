@@ -43,11 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: buildBookList(),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              _navigateAndDisplaySelection(context);
-            });
-          },
+          onPressed: () => _navigateAndDisplaySelection(context),
           backgroundColor: Colors.grey[800],
           child: const Icon(Icons.add),
         ),
@@ -62,17 +58,21 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<void> _navigateAndDisplaySelection(BuildContext context) async {
+  void _navigateAndDisplaySelection(BuildContext context) async {
     final result = await Navigator.pushNamed(context, '/addbook') as Map;
 
-  // basically add in the database
-    await BookList().addBook(
-      result['title'],
-      double.parse(result['price']),
-      result['sellername'],
-      result['location'],
-      result['contact'],
-    );
+    // basically add in the database
+    setState(() {
+      BookList().addBook(
+        result['title'],
+        double.parse(result['price']),
+        result['sellername'],
+        result['location'],
+        result['contact'],
+      );
+    });
+
+    print(result);
   }
 
   Widget buildBookList() {

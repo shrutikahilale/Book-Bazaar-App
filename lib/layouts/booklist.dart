@@ -19,19 +19,19 @@ class BookList extends StatelessWidget {
       'Nusery Rhymes',
       460.0,
       Person('UserName3', '2346565676', 'Maharashtra'),
-    ),    
+    ),
   ];
 
   addBook(String booktitle, double price, String sellername, String location,
       String contact) {
-        // add to database
+    // add to database
     books.add(
         BookSeller(booktitle, price, Person(sellername, location, contact)));
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return GridView.builder(
       itemCount: books.length,
       itemBuilder: (context, index) {
         return Book(
@@ -40,6 +40,10 @@ class BookList extends StatelessWidget {
           contact: books[index].contact,
         );
       },
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 2, mainAxisExtent:240 ,
+      ),
     );
   }
 }

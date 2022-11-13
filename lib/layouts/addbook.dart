@@ -75,6 +75,7 @@ class _AddBookState extends State<AddBook> {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: TextField(
                       controller: pricetec,
+                      keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Price of the book',
@@ -133,6 +134,7 @@ class _AddBookState extends State<AddBook> {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: TextField(
                       controller: contacttec,
+                      keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Contact number',
@@ -210,13 +212,35 @@ class _AddBookState extends State<AddBook> {
                       price.isNotEmpty &&
                       sellername.isNotEmpty &&
                       contact.isNotEmpty) {
-                    Navigator.pop(context, {
-                      'title': title,
-                      'price': price,
-                      'sellername': sellername,
-                      'contact': contact,
-                      'location': location,
-                    });
+                    if (contact.length < 10 && contact.length > 0) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: Duration(
+                            milliseconds: 1000,
+                          ),
+                          content: Text('Contact number invalid!'),
+                          backgroundColor: Colors.black,
+                        ),
+                      );
+                    } else {
+                      Navigator.pop(context, {
+                        'title': title,
+                        'price': price,
+                        'sellername': sellername,
+                        'contact': contact,
+                        'location': location,
+                      });
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        duration: Duration(
+                          milliseconds: 1000,
+                        ),
+                        content: Text('Please enter all fields!'),
+                        backgroundColor: Colors.black,
+                      ),
+                    );
                   }
                 },
                 style: ButtonStyle(
