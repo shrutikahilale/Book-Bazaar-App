@@ -1,7 +1,9 @@
+import 'package:bookbazaar/first_home_screen.dart';
+import 'package:bookbazaar/layouts/profile.dart';
 import 'package:bookbazaar/layouts/viewbook.dart';
 import 'package:flutter/material.dart';
 
-import 'home.dart';
+import 'layouts/home.dart';
 import 'layouts/addbook.dart';
 
 void main() {
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage('Book Bazaar'),
+      home: FirstScreen(),
       routes: {
         '/viewbook':(context) => BookLayout(),
         '/addbook':(context)=> AddBook(),
