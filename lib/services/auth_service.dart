@@ -48,6 +48,10 @@ class AuthService {
         debugPrint('Wrong password provided for that user.');
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text('Wrong password provided for that user.')));
+      } else if (e.code == 'email-already-in-use') {
+        debugPrint('already in use');
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('The account already exists for that email.')));
       } else {
         debugPrint(e.toString());
       }
