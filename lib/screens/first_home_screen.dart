@@ -1,7 +1,8 @@
 import 'package:bookbazaar/layouts/home.dart';
 import 'package:bookbazaar/layouts/profile.dart';
+import 'package:bookbazaar/services/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'layouts/wishlist.dart';
+import '../layouts/wishlist.dart';
 
 class FirstScreen extends StatefulWidget {
   const FirstScreen();
@@ -49,9 +50,20 @@ class _FirstScreenState extends State<FirstScreen> {
         appBar: AppBar(
           title: Text(titles[selectedIdx]),
           backgroundColor: Colors.deepPurple,
+          actions: [
+            GestureDetector(
+                onTap: () {
+                  AuthService().signOut();
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(right: 10.0),
+                  child: Icon(Icons.logout),
+                ))
+          ],
         ),
         body: screens[selectedIdx],
         bottomNavigationBar: BottomNavigationBar(
+          currentIndex: selectedIdx,
           items: items,
           selectedItemColor: Colors.black,
           selectedLabelStyle: const TextStyle(
