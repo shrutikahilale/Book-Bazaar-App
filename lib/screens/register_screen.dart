@@ -21,6 +21,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController name = TextEditingController();
   TextEditingController phone = TextEditingController();
 
+  bool isNotVisible = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,24 +30,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
           child: SingleChildScrollView(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Create account",
-                style: GoogleFonts.kanit(
-                    fontSize: 25, fontWeight: FontWeight.w600),
-              ),
-              Text(
-                "Connect with the bookmates today!",
-                style: GoogleFonts.kanit(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey.shade600),
-              ),
-              Form(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Create account",
+                  style: GoogleFonts.kanit(
+                      fontSize: 25, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  "Connect with the bookmates today!",
+                  style: GoogleFonts.kanit(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey.shade600),
+                ),
+                Form(
                   key: key,
                   child: Column(
                     children: [
@@ -61,9 +64,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return null;
                         },
                         decoration: InputDecoration(
-                            labelText: 'Name',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12))),
+                          labelText: 'Name',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 20,
@@ -81,9 +86,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return null;
                         },
                         decoration: InputDecoration(
-                            labelText: 'Contact No.',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12))),
+                          labelText: 'Contact No.',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 20,
@@ -99,9 +106,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           return null;
                         },
                         decoration: InputDecoration(
-                            labelText: 'Email Address',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12))),
+                          labelText: 'Email Address',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 20,
@@ -118,18 +127,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                           return null;
                         },
-                        obscureText: true,
+                        obscureText: isNotVisible,
                         decoration: InputDecoration(
-                            labelText: 'Password',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12))),
+                          labelText: 'Password',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          suffix: GestureDetector(
+                            onTap: (() {
+                              setState(() {
+                                isNotVisible =
+                                    isNotVisible == true ? false : true;
+                              });
+                            }),
+                            child: Icon(
+                              isNotVisible == true
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                     ],
-                  )),
-              ElevatedButton(
+                  ),
+                ),
+                ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Consts.primary,
                       fixedSize:
@@ -150,58 +176,60 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       fontSize: 22,
                       fontWeight: FontWeight.w400,
                     ),
-                  )),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Or Sign Up With",
-                    style: GoogleFonts.kanit(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                    ),
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: SignInButton(
-                  Buttons.googleDark,
-                  onPressed: () async {
-                    if (await AuthService().signInWithGoogle()) {
-                      Navigator.of(context).pop();
-                    }
-                  },
                 ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.22,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account?",
-                    style: GoogleFonts.kanit(fontSize: 18),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      " Login",
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Or Sign Up With",
                       style: GoogleFonts.kanit(
-                          fontSize: 18, color: Consts.primary),
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: SignInButton(
+                    Buttons.googleDark,
+                    onPressed: () async {
+                      if (await AuthService().signInWithGoogle()) {
+                        Navigator.of(context).pop();
+                      }
+                    },
                   ),
-                ],
-              ),
-            ]),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.22,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account?",
+                      style: GoogleFonts.kanit(fontSize: 18),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        " Login",
+                        style: GoogleFonts.kanit(
+                            fontSize: 18, color: Consts.primary),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

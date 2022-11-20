@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class WishList extends StatelessWidget {
-  WishList({super.key});
+  List<String> wishlist = [];
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Center(
-          child: Text('Wishlist screen'),
+          child: wishlist.isEmpty
+              ? Text('No books is your wishlist')
+              : ListView.builder(itemBuilder: ((context, index) {
+                  return Text('Book title');
+                })),
         ),
       ),
     );

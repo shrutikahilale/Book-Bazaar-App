@@ -95,12 +95,15 @@ class AuthService {
 
   Future<void> createUserProfile(String name, String email, String phone,
       String uid, String photoUrl) async {
+    // add user to Users collection
     await FirebaseFirestore.instance.collection("Users").doc(uid).set({
       "name": name,
       "phone": phone,
       "email": email,
       "uid": uid,
-      "photoURL": photoUrl
+      "photoURL": photoUrl,
     });
+
+    
   }
 }

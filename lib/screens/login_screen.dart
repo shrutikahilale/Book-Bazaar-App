@@ -21,31 +21,34 @@ class _LoginScreenState extends State<LoginScreen> {
 
   TextEditingController password = TextEditingController();
 
+  bool isNotVisible = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
-          child: Scrollbar(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Hi, Welcome Back!👋",
-                style: GoogleFonts.kanit(
-                    fontSize: 25, fontWeight: FontWeight.w600),
-              ),
-              Text(
-                "Hello again, you've been missed!",
-                style: GoogleFonts.kanit(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey.shade600),
-              ),
-              Form(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Hi, Welcome Back!👋",
+                  style: GoogleFonts.kanit(
+                      fontSize: 25, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  "Hello again, you've been missed!",
+                  style: GoogleFonts.kanit(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey.shade600),
+                ),
+                Form(
                   key: key,
                   child: Column(
                     children: [
@@ -63,9 +66,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         controller: email,
                         decoration: InputDecoration(
-                            labelText: 'Email Address',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12))),
+                          labelText: 'Email Address',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 20,
@@ -82,26 +87,47 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                         controller: password,
-                        obscureText: true,
+                        obscureText: isNotVisible,
                         decoration: InputDecoration(
-                            labelText: 'Password',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12))),
+                          labelText: 'Password',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          suffix: GestureDetector(
+                            onTap: (() {
+                              setState(() {
+                                isNotVisible =
+                                    isNotVisible == true ? false : true;
+                              });
+                            }),
+                            child: Icon(
+                              isNotVisible == true
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                     ],
-                  )),
-              ElevatedButton(
+                  ),
+                ),
+                ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Consts.primary,
-                      fixedSize:
-                          Size(MediaQuery.of(context).size.width * 0.92, 55)),
+                    backgroundColor: Consts.primary,
+                    fixedSize:
+                        Size(MediaQuery.of(context).size.width * 0.92, 55),
+                  ),
                   onPressed: () {
                     if (key.currentState!.validate()) {
                       AuthService().login(
-                          email.text.trim(), password.text.trim(), context);
+                        email.text.trim(),
+                        password.text.trim(),
+                        context,
+                      );
                     }
                   },
                   child: Text(
@@ -110,60 +136,58 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontSize: 22,
                       fontWeight: FontWeight.w400,
                     ),
-                  )),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Or Login With",
-                    style: GoogleFonts.kanit(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                    ),
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: SignInButton(
-                  Buttons.googleDark,
-                  onPressed: () {
-                    AuthService().signInWithGoogle();
-                  },
                 ),
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an account?",
-                          style: GoogleFonts.kanit(fontSize: 18),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/register');
-                          },
-                          child: Text(
-                            " Sign Up",
-                            style: GoogleFonts.kanit(
-                                fontSize: 18, color: Consts.primary),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      "Or Login With",
+                      style: GoogleFonts.kanit(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ],
                 ),
-              ),
-            ]),
+                const SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: SignInButton(
+                    Buttons.googleDark,
+                    onPressed: () {
+                      AuthService().signInWithGoogle();
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.16,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account?",
+                      style: GoogleFonts.kanit(fontSize: 18),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/register');
+                      },
+                      child: Text(
+                        " Sign Up",
+                        style: GoogleFonts.kanit(
+                            fontSize: 18, color: Consts.primary),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
