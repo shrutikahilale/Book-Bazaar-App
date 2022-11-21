@@ -28,17 +28,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _navigateAndDisplaySelection(BuildContext context) async {
-    final result = await Navigator.pushNamed(context, '/addbook') as Map;
+    Navigator.pushNamed(context, '/addbook');
 
-    // basically add in the database
-    setState(() {
-      BookList().addBook(
-        result['title'],
-        double.parse(result['price']),
-        result['sellername'],
-        result['location'],
-        result['contact'],
-      );
-    });
+    // // basically add in the database
+    // setState(() {
+    //   BookList().addBook(
+    //     result['title'],
+    //     double.parse(result['price']),
+    //     result['sellername'],
+    //     result['location'],
+    //     result['contact'],
+    //   );
+    // });
   }
 }

@@ -1,4 +1,6 @@
+import 'package:bookbazaar/services/database_service.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddBook extends StatefulWidget {
   @override
@@ -7,11 +9,13 @@ class AddBook extends StatefulWidget {
 
 class _AddBookState extends State<AddBook> {
   // texteditingcontrollers for textfields
-  final titletec = TextEditingController();
-  final pricetec = TextEditingController();
-  final sellernametec = TextEditingController();
-  final contacttec = TextEditingController();
-  final locationtec = TextEditingController();
+  final titletec =
+      TextEditingController(text: "Sherlock Holmes"); // for testing purposes
+  final pricetec = TextEditingController(text: "399.0");
+  final descriptiontec = TextEditingController();
+
+  bool imagesSelected = false;
+  List<XFile> imgs = [];
 
   @override
   Widget build(BuildContext context) {
@@ -84,26 +88,6 @@ class _AddBookState extends State<AddBook> {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
-              Container(
-                alignment: Alignment.center,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 230, 217, 252),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(6.0),
-                  child: Text(
-                    'Seller Details',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.deepPurple,
-                    ),
-                  ),
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
@@ -114,84 +98,80 @@ class _AddBookState extends State<AddBook> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: TextField(
-                      controller: sellernametec,
-                      decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Name of the seller',
-                          hintStyle: TextStyle(fontSize: 14)),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: TextField(
-                      controller: contacttec,
+                      controller: descriptiontec,
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Contact number',
+                          hintText: 'Description (optional)',
                           hintStyle: TextStyle(fontSize: 14)),
                     ),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: TextField(
-                      controller: locationtec,
-                      decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Location',
-                          hintStyle: TextStyle(fontSize: 14)),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
+
               Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.symmetric(vertical: 10),
                 decoration: const BoxDecoration(
                   color: Color.fromARGB(255, 230, 217, 252),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(4.0),
-                      child: Text(
-                        'Add a photo',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.deepPurple,
-                        ),
+                child: (imagesSelected && imgs.isNotEmpty)
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: () async {
+                              imagesSelected = false;
+                              imgs.clear();
+                              setState(() {});
+                            },
+                            icon: Icon(
+                              Icons.close,
+                              color: Colors.grey[850],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(4.0),
+                            child: Text(
+                              "${imgs.length} images selected",
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.deepPurple,
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: () async {
+                              ImagePicker picker = ImagePicker();
+                              imgs = await picker.pickMultiImage();
+                              imagesSelected = true;
+                              setState(() {});
+                              print(imgs.length);
+                            },
+                            icon: Icon(
+                              Icons.add_a_photo,
+                              color: Colors.grey[850],
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.all(4.0),
+                            child: Text(
+                              'Upload Images',
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.deepPurple,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.add_a_photo,
-                        color: Colors.grey[850],
-                      ),
-                    ),
-                  ],
-                ),
               ),
               const SizedBox(
                 height: 10,
@@ -199,41 +179,43 @@ class _AddBookState extends State<AddBook> {
 
               // Button to add the book
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // grab the data from TECs
                   String title = titletec.text;
                   String price = pricetec.text;
-                  String sellername = sellernametec.text;
-                  String contact = contacttec.text;
-                  String location = locationtec.text;
+                  String? description = descriptiontec.text;
 
-                  // send this data to database and it will render it on home page as well
-                  if (title.isNotEmpty &&
-                      price.isNotEmpty &&
-                      sellername.isNotEmpty &&
-                      contact.isNotEmpty) {
-                    if (contact.length < 10 && contact.length > 0) {
+                  //send this data to database and it will render it on home page as well
+                  if (title.isNotEmpty && price.isNotEmpty && imagesSelected) {
+                    const SnackBar(
+                      duration: Duration(
+                        milliseconds: 1000,
+                      ),
+                      content: Text('Adding to our database...'),
+                      backgroundColor: Colors.black,
+                    );
+
+                    bool res = await DatabaseService()
+                        .uploadBook(imgs, title, price, description);
+
+                    if (res) {
+                      Navigator.pop(
+                        context,
+                      );
+                    } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           duration: Duration(
                             milliseconds: 1000,
                           ),
-                          content: Text('Contact number invalid!'),
+                          content: Text('Please enable location!'),
                           backgroundColor: Colors.black,
                         ),
                       );
-                    } else {
-                      Navigator.pop(context, {
-                        'title': title,
-                        'price': price,
-                        'sellername': sellername,
-                        'contact': contact,
-                        'location': location,
-                      });
                     }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         duration: Duration(
                           milliseconds: 1000,
                         ),
