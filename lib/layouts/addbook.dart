@@ -187,13 +187,13 @@ class _AddBookState extends State<AddBook> {
 
                   //send this data to database and it will render it on home page as well
                   if (title.isNotEmpty && price.isNotEmpty && imagesSelected) {
-                    const SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       duration: Duration(
                         milliseconds: 1000,
                       ),
                       content: Text('Adding to our database...'),
                       backgroundColor: Colors.black,
-                    );
+                    ));
 
                     bool res = await DatabaseService()
                         .uploadBook(imgs, title, price, description);
