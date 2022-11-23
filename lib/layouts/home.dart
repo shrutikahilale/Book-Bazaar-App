@@ -1,6 +1,9 @@
 import 'package:bookbazaar/layouts/booklist.dart';
 import 'package:flutter/material.dart';
 
+import '../models/personModel.dart';
+import 'booklisttile.dart';
+
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
@@ -10,14 +13,45 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
-        padding: const EdgeInsets.fromLTRB(0, 10.0, 10.0, 10.0),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.grey[200],
+      backgroundColor: Colors.grey[200],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // search bar
+              Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    children: [
+                      Icon(Icons.search),
+                      SizedBox(width: 20),
+                      Text(
+                        'Search',
+                        style: TextStyle(
+                          color: Color.fromARGB(123, 0, 0, 0),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                height: 25,
+              ),
+
+              // book list layout
+              BookList(),
+            ],
+          ),
         ),
-        child: BookList(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _navigateAndDisplaySelection(context),
@@ -29,16 +63,5 @@ class _HomePageState extends State<HomePage> {
 
   void _navigateAndDisplaySelection(BuildContext context) async {
     Navigator.pushNamed(context, '/addbook');
-
-    // // basically add in the database
-    // setState(() {
-    //   BookList().addBook(
-    //     result['title'],
-    //     double.parse(result['price']),
-    //     result['sellername'],
-    //     result['location'],
-    //     result['contact'],
-    //   );
-    // });
   }
 }
