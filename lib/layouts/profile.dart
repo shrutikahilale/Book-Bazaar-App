@@ -15,6 +15,9 @@ class _ProfileSettingsState extends State<ProfileSettings> {
   List<bool> isSold = List.generate(4, (index) => false);
   List<String> sellingBooksList = [];
   String name = '';
+  String email = '';
+  String phone = '';
+  String photoURL = '';
 
   // get current user uid
   final uid = FirebaseAuth.instance.currentUser!.uid;
@@ -24,6 +27,9 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     final user =
         await FirebaseFirestore.instance.collection('Users').doc(uid).get();
     name = user['name'];
+    email = user['email'];
+    phone = user['phone'];
+    photoURL = user['photoURL'];
     print(name);
   }
 
@@ -82,43 +88,67 @@ class _ProfileSettingsState extends State<ProfileSettings> {
             return Column(
               children: [
                 const SizedBox(
-                  height: 40,
+                  height: 10,
                 ),
                 // profile photo
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
                       padding: EdgeInsets.only(left: 20.0),
                       child: CircleAvatar(
                         radius: 40,
-                        child: Image(
-                          image: AssetImage('assets/profile-pic.jpg'),
-                          fit: BoxFit.fill,
-                          height: 200,
-                        ),
+                        child: photoURL.isNotEmpty
+                            ? Image.network(
+                                photoURL,
+                                fit: BoxFit.cover,
+                                height: 200,
+                              )
+                            : Image(
+                                color: Colors.white,
+                                image: AssetImage('assets/profile.png'),
+                                fit: BoxFit.cover,
+                                height: 200,
+                              ),
                       ),
                     ),
                     SizedBox(width: 20),
-                    Padding(
-                      padding: EdgeInsets.only(top: 16),
-                      child: Text(
-                        overflow: TextOverflow.fade,
-                        name,
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text(
+                            overflow: TextOverflow.fade,
+                            name,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 12),
+                          child: Text(
+                            overflow: TextOverflow.fade,
+                            email,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 12),
+                          child: Text(
+                            overflow: TextOverflow.fade,
+                            phone,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      width: 80,
-                    ),
-                    // GestureDetector(
-                    //   child: Icon(Icons.settings),
-
-                    //   // TODO: implemeent onTap to open settings menu
-                    // ),
                   ],
                 ),
                 SizedBox(height: 20),

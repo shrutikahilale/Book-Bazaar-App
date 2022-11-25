@@ -1,38 +1,28 @@
-import 'package:bookbazaar/services/database_service.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:bookbazaar/models/book.dart';
+import 'package:bookbazaar/layouts/booklisttile.dart';
+import 'package:bookbazaar/models/personModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../models/personModel.dart';
-import 'booklisttile.dart';
 
-class BookList extends StatelessWidget {
-  // List<Book> books = [];
+class BooksForYou extends StatelessWidget {
+  List<BookListTile> books = [];
 
   final ref = FirebaseFirestore.instance.collection('Books');
 
   // Future getBooks() async {
-  //   return ref.get().then((QuerySnapshot<Map<String, dynamic>> snapshot) {
-  //     for (QueryDocumentSnapshot<Map<String, dynamic>> doc in snapshot.docs) {
-  //       Map<String, dynamic> mp = doc.data();
-  //       print(mp);
-  //       books.add(Book(
-  //           title: mp['title'],
-  //           price: mp['price'],
-  //           seller: mp['seller'],
-  //           location: mp['location'],
-  //           images: mp['images'],
-  //           isSold: mp['isSold'],
-  //           buyer: mp['buyer'],
-  //           description: mp['description'] ?? ""));
+  //   await ref.get().then((snapshot) {
+  //     for (var doc in snapshot.docs) {
+  //       Map mp = doc.data();
+  //       books.add(BookListTile(
+  //         booktitle: mp['title'],
+  //         price: mp['price'],
+  //         contact: Person(mp['seller'], "9009001101", 'pune'),
+  //       ));
   //     }
   //   });
-  //   print(books.length);
   // }
 
-  BookList({super.key});
+  BooksForYou({super.key});
 
   @override
   Widget build(BuildContext context) {

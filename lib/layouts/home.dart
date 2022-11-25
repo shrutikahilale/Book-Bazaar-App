@@ -1,5 +1,7 @@
 import 'package:bookbazaar/layouts/booklist.dart';
+import 'package:bookbazaar/layouts/books_for_u.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../models/personModel.dart';
 import 'booklisttile.dart';
@@ -17,38 +19,34 @@ class _HomePageState extends State<HomePage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
         child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // search bar
-              Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    children: [
-                      Icon(Icons.search),
-                      SizedBox(width: 20),
-                      Text(
-                        'Search',
-                        style: TextStyle(
-                          color: Color.fromARGB(123, 0, 0, 0),
-                        ),
-                      ),
-                    ],
-                  ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10),
+                child: Text(
+                  "Explore",
+                  style: GoogleFonts.rubik(
+                      fontSize: 24, fontWeight: FontWeight.w500),
                 ),
               ),
-
-              SizedBox(
-                height: 25,
-              ),
-
               // book list layout
               BookList(),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 18.0,
+                  vertical: 10,
+                ),
+                child: Text(
+                  "Books For You",
+                  style: GoogleFonts.rubik(
+                      fontSize: 24, fontWeight: FontWeight.w500),
+                ),
+              ),
+              BooksForYou()
             ],
           ),
         ),

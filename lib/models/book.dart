@@ -12,6 +12,7 @@
 class Book {
   String title;
   String price; // or double
+  String description;
   String seller; // uid of the seller
   Map<String, double> location; // contains latitude and logitude
   List<String> images; // images of the book
@@ -20,6 +21,7 @@ class Book {
   Book({
     required this.title,
     required this.price,
+    required this.description,
     required this.seller,
     required this.location,
     required this.images,

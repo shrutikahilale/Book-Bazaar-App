@@ -17,7 +17,10 @@ class DatabaseService {
       final uploadTask = storageRef
           .child("Images/$uid/${imgs[i].name}}")
           .putData(await imgs[i].readAsBytes());
-      imgsref.add(uploadTask.snapshot.ref.fullPath);
+
+      final TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
+      final url = await taskSnapshot.ref.getDownloadURL();
+      imgsref.add(url);
     }
     return imgsref;
   }

@@ -1,5 +1,6 @@
 import 'package:bookbazaar/layouts/home.dart';
 import 'package:bookbazaar/layouts/profile.dart';
+import 'package:bookbazaar/layouts/search_page.dart';
 import 'package:bookbazaar/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import '../layouts/wishlist.dart';
@@ -53,10 +54,19 @@ class _FirstScreenState extends State<FirstScreen> {
           actions: [
             GestureDetector(
                 onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => SearchPage()));
+                },
+                child: Padding(
+                  padding: EdgeInsets.only(right: 25.0),
+                  child: Icon(Icons.search),
+                )),
+            GestureDetector(
+                onTap: () {
                   AuthService().signOut();
                 },
                 child: Padding(
-                  padding: EdgeInsets.only(right: 10.0),
+                  padding: EdgeInsets.only(right: 25.0),
                   child: Icon(Icons.logout),
                 ))
           ],
