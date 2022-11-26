@@ -51,7 +51,9 @@ class BookList extends StatelessWidget {
                   return BookListTile(
                       title: snapshot.data!.docs[index]['title'],
                       price: snapshot.data!.docs[index]['price'],
-                      url: snapshot.data!.docs[index]['images'][0]);
+                      url: snapshot.data!.docs[index]['images'][0],
+                      seller: snapshot.data!.docs[index]['seller'],
+                      description: snapshot.data!.docs[index]['description'],);
                 }),
               );
             }

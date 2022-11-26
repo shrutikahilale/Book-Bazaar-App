@@ -41,7 +41,9 @@ class BooksForYou extends StatelessWidget {
                   return BookListTile(
                       title: snapshot.data!.docs[index]['title'],
                       price: snapshot.data!.docs[index]['price'],
-                      url: snapshot.data!.docs[index]['images'][0]);
+                      url: snapshot.data!.docs[index]['images'][0],
+                      description: snapshot.data!.docs[index]['description'],
+                      seller: snapshot.data!.docs[index]['seller']);
                 }),
               );
             }
