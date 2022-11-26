@@ -54,7 +54,6 @@ class MyApp extends StatelessWidget {
       ),
       home: Middleware(),
       routes: {
-        '/viewbook': (context) => BookLayout(),
         '/addbook': (context) => AddBook(),
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
