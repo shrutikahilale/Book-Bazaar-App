@@ -38,10 +38,22 @@ class BooksForYou extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: ((context, index) {
-                  return BookListTile(
-                      title: snapshot.data!.docs[index]['title'],
-                      price: snapshot.data!.docs[index]['price'],
-                      url: snapshot.data!.docs[index]['images'][0]);
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/viewbook', arguments: {
+                        'title': snapshot.data!.docs[index]['title'],
+                        'price': snapshot.data!.docs[index]['price'],
+                        'seller': snapshot.data!.docs[index]['seller'],
+                        'description': snapshot.data!.docs[index]
+                            ['description'],
+                        'images': snapshot.data!.docs[index]['images']
+                      });
+                    },
+                    child: BookListTile(
+                        title: snapshot.data!.docs[index]['title'],
+                        price: snapshot.data!.docs[index]['price'],
+                        url: snapshot.data!.docs[index]['images'][0]),
+                  );
                 }),
               );
             }

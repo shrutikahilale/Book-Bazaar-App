@@ -5,6 +5,7 @@ import 'package:bookbazaar/screens/intro_screen.dart';
 import 'package:bookbazaar/screens/login_screen.dart';
 import 'package:bookbazaar/screens/middleware.dart';
 import 'package:bookbazaar/screens/register_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
@@ -54,7 +55,18 @@ class MyApp extends StatelessWidget {
       ),
       home: Middleware(),
       routes: {
-        '/viewbook': (context) => BookLayout(),
+        '/viewbook': (context) => BookLayout(
+              title:
+                  (ModalRoute.of(context)?.settings.arguments as Map)['title'],
+              description: (ModalRoute.of(context)?.settings.arguments
+                  as Map)['description'],
+              images:
+                  (ModalRoute.of(context)?.settings.arguments as Map)['images'],
+              price:
+                  (ModalRoute.of(context)?.settings.arguments as Map)['price'],
+              seller:
+                  (ModalRoute.of(context)?.settings.arguments as Map)['seller'],
+            ),
         '/addbook': (context) => AddBook(),
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),
