@@ -45,6 +45,8 @@ dependencies:
   sign_in_button: ^3.1.0
   image_picker: ^0.8.6
   location: ^4.4.0
+  latlong2: ^0.8.1
+  shimmer: ^2.0.0
   
 
 dev_dependencies:

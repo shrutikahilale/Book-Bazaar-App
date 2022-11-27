@@ -1,168 +1,168 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/material.dart';
-
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:bookbazaar/models/personModel.dart';
-import 'package:bookbazaar/services/database_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class BookLayout extends StatefulWidget {
+class BookLayout extends StatelessWidget {
   String title;
   String price;
+  String url;
   String seller;
   String description;
-  List<dynamic> images;
+  String sellerName = '';
+  String sellerPhone = '';
 
-  BookLayout({
-    Key? key,
-    required this.title,
-    required this.price,
-    required this.seller,
-    required this.description,
-    required this.images,
-  }) : super(key: key);
+  BookLayout(
+      {required this.title,
+      required this.price,
+      required this.url,
+      required this.seller,
+      required this.description});
 
-  @override
-  State<BookLayout> createState() => _BookLayoutState();
-}
+  Future getSellerDetails() async {
+    print(seller);
+    final user =
+        await FirebaseFirestore.instance.collection('Users').doc(seller).get();
+    sellerName = user['name'];
+    sellerPhone = user['phone'];
 
-class _BookLayoutState extends State<BookLayout> {
-  late String name;
-  late String email;
-  late String phone;
-  bool isLoaded = false;
-
-  getUser() async {
-    final user = await DatabaseService()
-        .ref
-        .collection('Users')
-        .doc(widget.seller)
-        .get();
-    name = user['name'];
-    email = user['email'];
-    phone = user['phone'];
-    isLoaded = true;
-    setState(() {});
-    //photoURL = user['photoURL'];
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getUser();
+    print(sellerName);
+    print(sellerPhone);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.title,
-          overflow: TextOverflow.ellipsis,
+        appBar: AppBar(
+          backgroundColor: Colors.deepPurple,
         ),
-        backgroundColor: Colors.deepPurple,
-      ),
-      backgroundColor: Colors.grey[200],
-      body: !isLoaded
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : SingleChildScrollView(
+        backgroundColor: Colors.grey[200],
+        body: FutureBuilder(
+          future: getSellerDetails(),
+          builder: (context, snapshot) {
+            return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 60),
 
                   // book image
-                  SizedBox(
-                    height: 300,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: widget.images.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.only(
-                                left: 30,
-                                right:
-                                    index == widget.images.length - 1 ? 20 : 0),
-                            child: Image(
-                              image: NetworkImage(
-                                widget.images[index],
-                              ),
-                              height: 300,
-                              width: 200,
-                              fit: BoxFit.fill,
-                            ),
-                          );
-                        }),
+                  Container(
+                    height: (400),
+                    width: (300),
+                    decoration: BoxDecoration(
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 10,
+                            offset: Offset(2, 5))
+                      ],
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                          image: NetworkImage(url), fit: BoxFit.fill),
+                    ),
                   ),
                   const SizedBox(height: 40),
 
-                  // name, description, Seller details, price
+                  // details
 
                   Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.all(40),
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(25),
                         topRight: Radius.circular(25),
                       ),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 30,
+                            offset: Offset(2, 5))
+                      ],
                     ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.title,
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.w600,
+                    child: Padding(
+                      padding: const EdgeInsets.all(40),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // title
+                            Text(
+                              title,
+                              style: GoogleFonts.poppins(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 38, 9, 89),
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(widget.description.isEmpty
-                              ? "-No description Given-"
-                              : widget.description),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          SizedBox(
-                            height: 1,
-                            child: Container(
-                                decoration: BoxDecoration(color: Colors.black)),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(name),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(email),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(phone),
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Text(
-                            'Rs. ${widget.price}',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                        ],
+
+                            // description
+
+                            Text(
+                              description.isEmpty
+                                  ? 'No description provided by seller'
+                                  : description,
+                              style: GoogleFonts.poppins(
+                                color: Color.fromARGB(255, 38, 9, 89),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            SizedBox(
+                              height: 2,
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Color.fromARGB(255, 38, 9, 89))),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+
+                            // seller info
+                            Text(
+                              sellerName,
+                              style: GoogleFonts.poppins(
+                                fontSize: 20,
+                                color: Color.fromARGB(255, 38, 9, 89),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              sellerPhone,
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 38, 9, 89),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+
+                            Text(
+                              '₹ $price',
+                              style: GoogleFonts.poppins(
+                                fontSize: 28,
+                                fontWeight: FontWeight.w800,
+                                color: Color.fromARGB(255, 38, 9, 89),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   )
                 ],
               ),
-            ),
-    );
+            );
+          },
+        ));
   }
 }

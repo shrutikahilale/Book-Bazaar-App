@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:developer';
 
 import 'package:bookbazaar/layouts/booklisttile.dart';
@@ -126,9 +128,12 @@ class _SearchPageState extends State<SearchPage> {
                             child: Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: BookListTile(
-                                  title: _booksList[index]['title'],
-                                  price: _booksList[index]['price'],
-                                  url: _booksList[index]['images'][0]),
+                                title: _booksList[index]['title'],
+                                price: _booksList[index]['price'],
+                                url: _booksList[index]['images'][0],
+                                description: _booksList[index]['description'],
+                                seller: _booksList[index]['seller'],
+                              ),
                             )),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,

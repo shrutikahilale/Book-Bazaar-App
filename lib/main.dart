@@ -55,18 +55,18 @@ class MyApp extends StatelessWidget {
       ),
       home: Middleware(),
       routes: {
-        '/viewbook': (context) => BookLayout(
-              title:
-                  (ModalRoute.of(context)?.settings.arguments as Map)['title'],
-              description: (ModalRoute.of(context)?.settings.arguments
-                  as Map)['description'],
-              images:
-                  (ModalRoute.of(context)?.settings.arguments as Map)['images'],
-              price:
-                  (ModalRoute.of(context)?.settings.arguments as Map)['price'],
-              seller:
-                  (ModalRoute.of(context)?.settings.arguments as Map)['seller'],
-            ),
+        // '/viewbook': (context) => BookLayout(
+        //       title:
+        //           (ModalRoute.of(context)?.settings.arguments as Map)['title'],
+        //       description: (ModalRoute.of(context)?.settings.arguments
+        //           as Map)['description'],
+        //       images:
+        //           (ModalRoute.of(context)?.settings.arguments as Map)['images'],
+        //       price:
+        //           (ModalRoute.of(context)?.settings.arguments as Map)['price'],
+        //       seller:
+        //           (ModalRoute.of(context)?.settings.arguments as Map)['seller'],
+        //     ),
         '/addbook': (context) => AddBook(),
         '/login': (context) => LoginScreen(),
         '/register': (context) => RegisterScreen(),

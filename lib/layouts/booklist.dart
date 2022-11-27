@@ -5,6 +5,7 @@ import 'package:bookbazaar/models/book.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer/shimmer.dart';
 import '../models/personModel.dart';
 import 'booklisttile.dart';
 
@@ -48,26 +49,35 @@ class BookList extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: ((context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/viewbook', arguments: {
-                        'title': snapshot.data!.docs[index]['title'],
-                        'price': snapshot.data!.docs[index]['price'],
-                        'seller': snapshot.data!.docs[index]['seller'],
-                        'description': snapshot.data!.docs[index]
-                            ['description'],
-                        'images': snapshot.data!.docs[index]['images']
-                      });
-                    },
-                    child: BookListTile(
-                        title: snapshot.data!.docs[index]['title'],
-                        price: snapshot.data!.docs[index]['price'],
-                        url: snapshot.data!.docs[index]['images'][0]),
+                  return BookListTile(
+                    title: snapshot.data!.docs[index]['title'],
+                    price: snapshot.data!.docs[index]['price'],
+                    url: snapshot.data!.docs[index]['images'][0],
+                    seller: snapshot.data!.docs[index]['seller'],
+                    description: snapshot.data!.docs[index]['description'],
                   );
                 }),
               );
             }
-            return Center(child: CircularProgressIndicator());
+            return SizedBox(
+                height: 300,
+                child: Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  enabled: true,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemCount: 3,
+                      itemBuilder: (context, snapshot) {
+                        return BookListTile(
+                            title: "",
+                            price: "",
+                            url: "",
+                            description: "",
+                            seller: "");
+                      }),
+                ));
           }),
     );
   }
