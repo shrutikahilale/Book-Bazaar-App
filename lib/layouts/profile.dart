@@ -34,51 +34,6 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     print(name);
   }
 
-  _removeBook(int index) {
-    setState(() {
-      isSold[index] = isSold[index] ? false : true;
-
-      if (isSold[index] == true) {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text(
-                  'Are you sure you want to remove the book from list?',
-                ),
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.green),
-                      ),
-                      onPressed: null,
-                      child: Text(
-                        'Yes',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.red),
-                      ),
-                      onPressed: null,
-                      child: Text(
-                        'No',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            });
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
