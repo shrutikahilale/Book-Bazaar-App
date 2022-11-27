@@ -35,7 +35,11 @@ class _BooksForYouState extends State<BooksForYou> {
           LatLng(_location.latitude!, _location.longitude!));
 
       if (km <= 5) {
-        books.add(map.data());
+        Map<String, dynamic> mp = new Map();
+
+        mp.addAll(map.data());
+        mp['id'] = map.id;
+        books.add(mp);
       }
     }
 
@@ -65,7 +69,8 @@ class _BooksForYouState extends State<BooksForYou> {
                     price: books[index]['price'],
                     url: books[index]['images'][0],
                     description: books[index]['description'],
-                    seller: books[index]['seller']);
+                    seller: books[index]['seller'],
+                    bid: books[index]['id']);
               }),
             ))
         : SizedBox(
@@ -80,11 +85,13 @@ class _BooksForYouState extends State<BooksForYou> {
                   itemCount: 3,
                   itemBuilder: (context, snapshot) {
                     return BookListTile(
-                        title: "",
-                        price: "",
-                        url: "",
-                        description: "",
-                        seller: "");
+                      title: "",
+                      price: "",
+                      url: "",
+                      description: "",
+                      seller: "",
+                      bid: "",
+                    );
                   }),
             ));
   }

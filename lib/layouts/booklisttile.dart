@@ -2,6 +2,8 @@
 
 import 'package:bookbazaar/layouts/viewbook.dart';
 import 'package:bookbazaar/models/personModel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,6 +15,7 @@ class BookListTile extends StatelessWidget {
   final String seller; // uid of the seller
   // final Map<String, double> location; // contains latitude and logitude
   // final List<String> images; // images of the book
+  final String bid;
 
   const BookListTile(
       {super.key,
@@ -20,7 +23,8 @@ class BookListTile extends StatelessWidget {
       required this.price,
       required this.url,
       required this.seller,
-      required this.description});
+      required this.description,
+      required this.bid});
 
   @override
   Widget build(BuildContext context) {
@@ -39,22 +43,72 @@ class BookListTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         child: Column(
           children: <Widget>[
-            Container(
-              height: (200),
-              width: (150),
-              decoration: BoxDecoration(
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 10,
-                        offset: Offset(2, 5))
-                  ],
-                  borderRadius: BorderRadius.circular(10),
-                  image: url.isNotEmpty
-                      ? DecorationImage(
-                          image: NetworkImage(url), fit: BoxFit.fill)
-                      : null),
-            ),
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Container(
+                height: (160),
+                width: (120),
+                decoration: BoxDecoration(
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 10,
+                          offset: Offset(2, 5))
+                    ],
+                    borderRadius: BorderRadius.circular(10),
+                    image: url.isNotEmpty
+                        ? DecorationImage(
+                            image: NetworkImage(url), fit: BoxFit.fill)
+                        : null),
+              ),
+              GestureDetector(
+                onTap: () async {
+                  // add to favourite of user
+                  final uid = FirebaseAuth.instance.currentUser!.uid;
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Adding to wishlist..'),
+                      backgroundColor: Colors.deepPurple,
+                    ),
+                  );
+
+                  final docRef = FirebaseFirestore.instance
+                      .collection('Users')
+                      .doc(uid)
+                      .collection('wishlist');
+
+                  // TODO: iterate through entire collection and then check if the bid is found
+
+                  await docRef.add({
+                    'title': title,
+                    'price': price,
+                    'seller': seller,
+                    'description': description,
+                    'bid': bid,
+                    'url': url,
+                  });
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Added to wishlist succesfully'),
+                      backgroundColor: Colors.lightGreen,
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 5.0, left: 5),
+                  child: CircleAvatar(
+                    radius: 12,
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      Icons.favorite,
+                      size: 16,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                ),
+              )
+            ]),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[

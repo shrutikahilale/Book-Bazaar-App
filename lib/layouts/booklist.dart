@@ -55,6 +55,7 @@ class BookList extends StatelessWidget {
                     url: snapshot.data!.docs[index]['images'][0],
                     seller: snapshot.data!.docs[index]['seller'],
                     description: snapshot.data!.docs[index]['description'],
+                    bid: snapshot.data!.docs[index].id,
                   );
                 }),
               );
@@ -71,11 +72,13 @@ class BookList extends StatelessWidget {
                       itemCount: 3,
                       itemBuilder: (context, snapshot) {
                         return BookListTile(
-                            title: "",
-                            price: "",
-                            url: "",
-                            description: "",
-                            seller: "");
+                          title: "",
+                          price: "",
+                          url: "",
+                          description: "",
+                          seller: "",
+                          bid: "",
+                        );
                       }),
                 ));
           }),

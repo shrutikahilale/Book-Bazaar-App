@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:bookbazaar/layouts/sellinglist.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class ProfileSettings extends StatefulWidget {
 
 class _ProfileSettingsState extends State<ProfileSettings> {
   List<bool> isSold = List.generate(4, (index) => false);
-  List<String> sellingBooksList = [];
+  // List<String> sellingBooksList = [];
   String name = '';
   String email = '';
   String phone = '';
@@ -31,51 +32,6 @@ class _ProfileSettingsState extends State<ProfileSettings> {
     phone = user['phone'];
     photoURL = user['photoURL'];
     print(name);
-  }
-
-  _removeBook(int index) {
-    setState(() {
-      isSold[index] = isSold[index] ? false : true;
-
-      if (isSold[index] == true) {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text(
-                  'Are you sure you want to remove the book from list?',
-                ),
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.green),
-                      ),
-                      onPressed: null,
-                      child: Text(
-                        'Yes',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.red),
-                      ),
-                      onPressed: null,
-                      child: Text(
-                        'No',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            });
-      }
-    });
   }
 
   @override
@@ -174,6 +130,8 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                   ),
                 ),
 
+                SellingList(),
+                /*
                 SizedBox(
                   height: 200,
                   child: sellingBooksList.isEmpty
@@ -213,6 +171,8 @@ class _ProfileSettingsState extends State<ProfileSettings> {
                           }),
                         ),
                 ),
+            
+                */
               ],
             );
           },

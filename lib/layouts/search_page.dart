@@ -133,6 +133,7 @@ class _SearchPageState extends State<SearchPage> {
                                 url: _booksList[index]['images'][0],
                                 description: _booksList[index]['description'],
                                 seller: _booksList[index]['seller'],
+                                bid: _booksList[index]['id'],
                               ),
                             )),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
