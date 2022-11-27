@@ -43,7 +43,8 @@ class BooksForYou extends StatelessWidget {
                       price: snapshot.data!.docs[index]['price'],
                       url: snapshot.data!.docs[index]['images'][0],
                       description: snapshot.data!.docs[index]['description'],
-                      seller: snapshot.data!.docs[index]['seller']);
+                      seller: snapshot.data!.docs[index]['seller'],
+                      bid: snapshot.data!.docs[index].id);
                 }),
               );
             }

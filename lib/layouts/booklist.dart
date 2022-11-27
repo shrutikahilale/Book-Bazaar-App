@@ -49,11 +49,13 @@ class BookList extends StatelessWidget {
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: ((context, index) {
                   return BookListTile(
-                      title: snapshot.data!.docs[index]['title'],
-                      price: snapshot.data!.docs[index]['price'],
-                      url: snapshot.data!.docs[index]['images'][0],
-                      seller: snapshot.data!.docs[index]['seller'],
-                      description: snapshot.data!.docs[index]['description'],);
+                    title: snapshot.data!.docs[index]['title'],
+                    price: snapshot.data!.docs[index]['price'],
+                    url: snapshot.data!.docs[index]['images'][0],
+                    seller: snapshot.data!.docs[index]['seller'],
+                    description: snapshot.data!.docs[index]['description'],
+                    bid: snapshot.data!.docs[index].id,
+                  );
                 }),
               );
             }

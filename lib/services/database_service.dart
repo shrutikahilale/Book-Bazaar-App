@@ -46,7 +46,8 @@ class DatabaseService {
     var _location =
         await location.getLocation(); // takes location from user's device
 
-    await ref.collection("Books").add({
+    final booksRef = ref.collection("Books");
+    final bid = await booksRef.add({
       'title': title,
       'price': price,
       'description': description ?? "",
@@ -56,7 +57,7 @@ class DatabaseService {
         "longitude": _location.longitude,
       },
       'images': imgsref,
-      'isSold': false
+      'isSold': false,
     });
 
     await ref.collection("Users").doc(uid).collection("sellingBooksList").add({
@@ -69,7 +70,8 @@ class DatabaseService {
         "longitude": _location.longitude,
       },
       'images': imgsref,
-      'isSold': false
+      'isSold': false,
+      'bid': bid
     });
 
     return true;

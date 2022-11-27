@@ -99,7 +99,7 @@ class _AddBookState extends State<AddBook> {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: TextField(
                       controller: descriptiontec,
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.text,
                       decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Description (optional)',
